@@ -1,0 +1,50 @@
+/*Oscar Yair Núñez Hernández*/
+
+CREATE DATABASE IF NOT EXISTS peliculas;
+
+USE peliculas;
+
+CREATE TABLE generos(
+ genero_id INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ nombre VARCHAR(50) UNIQUE NOT NULL,
+ descripcion TEXT
+)ENGINE=InnoDB 
+DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE directores(
+ director_id INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ nombre VARCHAR(50) UNIQUE NOT NULL,
+ biografia TEXT
+)ENGINE=InnoDB 
+DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE peliculas(
+ pelicula_id INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ titulo VARCHAR(50) UNIQUE NOT NULL,
+ guionista VARCHAR(50),
+ estreno DATE NOT NULL,
+ calificacion VARCHAR(2),
+ genero INTEGER UNSIGNED,
+  FOREIGN KEY (genero) 
+   REFERENCES generos (genero_id)
+   ON DELETE RESTRICT
+   ON UPDATE CASCADE
+)ENGINE=InnoDB 
+DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE pelicula_x_director(
+ pelicula_x_director_id INTEGER UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+ director INTEGER UNSIGNED,
+ pelicula INTEGER UNSIGNED,
+  FOREIGN KEY (director)
+  REFERENCES directores(director_id)
+  ON DELETE RESTRICT
+  ON UPDATE CASCADE,
+  FOREIGN KEY (pelicula)
+  REFERENCES peliculas(pelicula_id)
+  ON DELETE RESTRICT
+  ON UPDATE CASCADE
+)ENGINE=InnoDB 
+DEFAULT CHARSET=utf8mb4;
+
+
